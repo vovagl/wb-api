@@ -14,11 +14,14 @@ class ImportIncomes extends Command
     public function handle()
 {
     $page = 1;
+    $baseUrl = config('services.api.base_url');
+    $apiKey = config('services.api.key');
 
     do {
 
-        $response = Http::get(env('API_BASE_URL') . '/api/incomes', [
-            'key' => env('API_KEY'),
+        $response = Http::timeout(60)
+            ->get($baseUrl . '/api/incomes', [
+            'key' => $apiKey,
             'dateFrom' => now()->subMonths(3)->format('Y-m-d'),
             'dateTo' => now()->format('Y-m-d'),
             'page' => $page,

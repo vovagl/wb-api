@@ -15,10 +15,13 @@ class ImportSales extends Command
     {
         $page = 1;
         $lastPage = 1;
+        $baseUrl = config('services.api.base_url');
+        $apiKey = config('services.api.key');
 
         do {
-            $response = Http::get(env('API_BASE_URL') . '/api/sales', [
-                'key' => env('API_KEY'),
+            $response = Http::timeout(60)
+                ->get($baseUrl . '/api/sales', [
+                'key' => $apiKey,
                 'dateFrom' => now()->subDay()->format('Y-m-d'),
                 'dateTo' => now()->format('Y-m-d'),
                 'page' => $page,

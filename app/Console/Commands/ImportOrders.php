@@ -14,15 +14,19 @@ class ImportOrders extends Command
     public function handle()
     {
         $page = 1;
+        $baseUrl = config('services.api.base_url');
+        $apiKey = config('services.api.key');
 
         do {
-            $response = Http::timeout(60)->get(env('API_BASE_URL') . '/api/orders', [
-                'key' => env('API_KEY'),
-                'dateFrom' => now()->subDays(3)->format('Y-m-d'),
-                'dateTo' => now()->format('Y-m-d'),
-                'page' => $page,
-                'limit' => 500,
-            ]);
+            $response = Http::timeout(60)
+                            ->get($baseUrl . '/api/orders', [
+                                'key' => $apiKey,
+                                'dateFrom' => now()->subDays(3)->format('Y-m-d'),
+                                'dateTo' => now()->format('Y-m-d'),
+                                'page' => $page,
+                                'limit' => 500,
+            ]
+            );
 
             if (!$response->successful()) {
                 $this->error("HTTP error: " . $response->status());

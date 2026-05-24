@@ -20,9 +20,10 @@ class ImportStocks extends Command
     $apiKey = config('services.api.key');
 
     do {
-        $response = Http::timeout(30)->get($baseUrl . '/api/stocks',
+        $response = Http::timeout(30)
+        ->withToken($apiKey)
+        ->get($baseUrl . '/api/stocks',
             [
-                'key' => $apiKey,
                 'dateFrom' => $date,
                 'dateTo'   => $date,
                 'page'     => $page,
