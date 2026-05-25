@@ -49,10 +49,16 @@ class ImportIncomes extends Command
                     'income_id' => $item['income_id'],
                 ],
                 [
-                    'date' => $item['date'],
-                    'supplier_article' => $item['supplier_article'],
-                    'quantity' => $item['quantity'],
-                    'total_price' => $item['total_price'],
+                'date' => $item['date'],
+                'last_change_date' => $item['last_change_date'] ?? null,
+                'supplier_article' => $item['supplier_article'] ?? null,
+                'tech_size' => $item['tech_size'] ?? null,
+                'barcode' => $item['barcode'] ?? null,
+                'quantity' => $item['quantity'] ?? 0,
+                'total_price' => $item['total_price'] ?? 0,
+                'date_close' => $item['date_close'] ?? null,
+                'warehouse_name' => $item['warehouse_name'] ?? null,
+                'nm_id' => $item['nm_id'] ?? null,
                 ]
             );
         }
